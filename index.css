@@ -1,0 +1,50 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+button {
+    background-color: black;
+    border-radius: 8px 12px;
+    outline: none;
+    border: none;
+    padding: 10px 15px;
+}
+a{
+    color: #fff;
+    text-transform: uppercase;
+    outline: none;
+    text-decoration: none;
+} 
+
+.heading {
+    color: red;
+}
+
+a:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: pink;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: red;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
