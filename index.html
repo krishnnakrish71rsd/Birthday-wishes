@@ -1,31 +1,558 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Krishna</title>
-    <link rel="stylesheet" href="./index.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday, My Love</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#0d3322;--green2:#1a5c3a;--green3:#2d7a52;
+  --red:#8b1a1a;--red2:#b52020;--red3:#d4302f;
+  --gold:#c9a84c;--gold2:#e8c97a;
+  --cream:#fdf6ec;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--green);color:var(--cream);overflow-x:hidden}
+
+/* ── PETALS ── */
+#petals{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+
+/* ══════════════════════════════
+   LOGIN PAGE
+══════════════════════════════ */
+#loginPage{
+  position:fixed;inset:0;z-index:500;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(139,26,26,.4) 0%, transparent 65%),
+    linear-gradient(180deg,#060e09 0%,#0a2218 45%,#0d3322 100%);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+}
+.login-box{
+  width:100%;max-width:440px;
+  background:rgba(253,246,236,.04);
+  border:1px solid rgba(201,168,76,.22);
+  border-radius:3px;
+  padding:56px 44px 48px;
+  position:relative;text-align:center;
+}
+.login-box::before,.login-box::after{
+  content:'❧';position:absolute;
+  font-size:1.3rem;color:rgba(201,168,76,.3);
+}
+.login-box::before{top:16px;left:20px}
+.login-box::after{bottom:16px;right:20px;transform:rotate(180deg)}
+
+.login-rose{font-size:3rem;margin-bottom:6px;display:block;animation:heartbeat 2s ease-in-out infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+
+.login-eyebrow{
+  font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:10px;font-weight:300;
+}
+.login-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.1rem;font-weight:700;color:var(--cream);
+  margin-bottom:6px;
+}
+.login-sub{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:1rem;color:rgba(253,246,236,.5);
+  margin-bottom:36px;
+}
+.gold-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 32px}
+
+.login-label{
+  display:block;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;text-align:left;
+}
+.login-input{
+  width:100%;padding:13px 16px;margin-bottom:20px;
+  background:rgba(253,246,236,.05);
+  border:1px solid rgba(201,168,76,.25);border-radius:2px;
+  color:var(--cream);font-family:'Jost',sans-serif;font-size:.95rem;
+  outline:none;transition:.2s;
+}
+.login-input::placeholder{color:rgba(253,246,236,.28)}
+.login-input:focus{border-color:var(--gold);background:rgba(201,168,76,.07)}
+
+.login-btn{
+  width:100%;padding:14px;margin-top:6px;
+  background:var(--red);color:var(--gold);
+  font-family:'Jost',sans-serif;font-size:.82rem;
+  letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+  border:1px solid rgba(201,168,76,.3);border-radius:2px;
+  cursor:pointer;transition:.2s;
+}
+.login-btn:hover{background:var(--red2);transform:translateY(-2px)}
+.login-error{
+  display:none;margin-top:14px;
+  font-size:.82rem;color:#f87171;letter-spacing:.05em;
+}
+.login-note{
+  margin-top:20px;font-size:.74rem;
+  color:rgba(253,246,236,.3);line-height:1.7;
+}
+
+/* ══════════════════════════════
+   MAIN PAGE (hidden until login)
+══════════════════════════════ */
+#mainPage{display:none}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;width:100%;z-index:200;
+  background:rgba(13,51,34,.93);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(201,168,76,.18);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;height:62px;
+}
+.nav-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:600;color:var(--gold);
+  text-decoration:none;letter-spacing:.05em;
+}
+.nav-brand em{color:var(--red3);font-style:italic}
+.nav-links{display:flex;gap:4px;list-style:none;align-items:center}
+.nav-links a{
+  text-decoration:none;font-size:.8rem;font-weight:400;letter-spacing:.06em;
+  color:rgba(253,246,236,.6);padding:7px 14px;border-radius:3px;
+  transition:.2s;text-transform:uppercase;
+}
+.nav-links a:hover{color:var(--gold);background:rgba(201,168,76,.08)}
+.nav-links .cta-btn{background:var(--red);color:var(--gold)!important;border:1px solid rgba(201,168,76,.3)}
+.nav-links .cta-btn:hover{background:var(--red2)!important}
+.nav-user{
+  font-size:.75rem;color:var(--gold2);letter-spacing:.08em;
+  margin-right:4px;opacity:.8;
+}
+.logout-btn{
+  background:none;border:1px solid rgba(201,168,76,.25);
+  color:rgba(253,246,236,.45);font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;padding:5px 12px;border-radius:2px;
+  cursor:pointer;transition:.2s;font-family:'Jost',sans-serif;
+}
+.logout-btn:hover{border-color:var(--red);color:var(--red3)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%,rgba(139,26,26,.35) 0%,transparent 70%),
+    linear-gradient(180deg,#0a2218 0%,#0d3322 40%,#0a1e12 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:110px 24px 80px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:600px;height:300px;
+  background:radial-gradient(ellipse,rgba(180,40,40,.18) 0%,transparent 70%);
+  animation:glowPulse 3s ease-in-out infinite;pointer-events:none;
+}
+@keyframes glowPulse{0%,100%{opacity:.7}50%{opacity:1}}
+.hero-divider{width:120px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 22px}
+.hero-eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold2);margin-bottom:18px;font-weight:300}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,8vw,6.5rem);font-weight:700;line-height:1;
+  color:var(--cream);margin-bottom:8px;
+  text-shadow:0 4px 40px rgba(139,26,26,.5);
+}
+.hero h1 em{color:var(--red3);font-style:italic}
+.hero-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,5vw,3.2rem);font-style:italic;font-weight:400;
+  color:var(--gold);margin:6px 0 30px;text-shadow:0 2px 30px rgba(201,168,76,.4);
+}
+.hero-quote{
+  font-family:'EB Garamond',serif;font-size:clamp(1rem,2.2vw,1.2rem);
+  font-style:italic;color:rgba(253,246,236,.75);
+  max-width:520px;line-height:1.85;margin-bottom:44px;
+}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{
+  padding:13px 32px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;
+  text-decoration:none;font-weight:500;border-radius:3px;transition:.2s;
+  cursor:pointer;border:none;display:inline-block;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-rose{background:var(--red);color:var(--gold);border:1px solid rgba(201,168,76,.35);box-shadow:0 4px 20px rgba(139,26,26,.4)}
+.btn-rose:hover{background:var(--red2)}
+.btn-ghost{background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,.4)}
+.btn-ghost:hover{background:rgba(201,168,76,.08)}
+
+/* ── GOLD RULE ── */
+.gold-rule{display:flex;align-items:center;gap:14px;padding:0 6%}
+.gold-rule::before,.gold-rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.5),transparent)}
+.gold-rule span{color:var(--gold);font-size:.95rem}
+
+/* ── SECTIONS ── */
+section{padding:90px 6%}
+.sec-eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:400}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;color:var(--cream);margin-bottom:16px}
+
+/* ── LETTER ── */
+#letter{background:linear-gradient(135deg,#0a2218 0%,#0d3322 50%,#0a1e12 100%);text-align:center}
+.letter-wrap{
+  max-width:700px;margin:50px auto 0;
+  background:rgba(253,246,236,.04);border:1px solid rgba(201,168,76,.18);
+  border-radius:2px;padding:60px 50px;position:relative;
+}
+.letter-wrap::before,.letter-wrap::after{content:'❧';position:absolute;font-size:1.4rem;color:rgba(201,168,76,.35)}
+.letter-wrap::before{top:18px;left:22px}
+.letter-wrap::after{bottom:18px;right:22px;transform:rotate(180deg)}
+.letter-text{
+  font-family:'EB Garamond',serif;font-size:clamp(1.05rem,2vw,1.22rem);
+  font-style:italic;line-height:2.1;color:rgba(253,246,236,.88);margin-bottom:30px;
+}
+.letter-text strong{color:var(--gold2);font-style:normal;font-weight:400}
+.letter-sig{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--red3);font-style:italic;font-weight:600}
+
+/* ── ROSE MARQUEE ── */
+.rose-strip{background:var(--red);padding:22px 0;overflow:hidden;white-space:nowrap}
+.rose-inner{display:inline-block;animation:rscroll 24s linear infinite;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(253,246,236,.8);font-weight:300}
+.rose-inner span{margin:0 36px}
+.rose-inner span::before{content:'✦  '}
+@keyframes rscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── QUOTES ── */
+#quotes{background:#0a1e12;text-align:center}
+.quotes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:50px}
+.q-card{
+  background:rgba(253,246,236,.03);border:1px solid rgba(201,168,76,.15);
+  border-top:2px solid var(--red);border-radius:2px;padding:36px 28px;
+  text-align:left;transition:.25s;
+}
+.q-card:hover{background:rgba(201,168,76,.06);border-top-color:var(--gold);transform:translateY(-4px)}
+.q-mark{font-family:'Cormorant Garamond',serif;font-size:3.5rem;line-height:.8;color:var(--red);opacity:.6;margin-bottom:14px;display:block}
+.q-text{font-family:'EB Garamond',serif;font-size:1.05rem;font-style:italic;line-height:1.85;color:rgba(253,246,236,.82);margin-bottom:18px}
+.q-author{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:400}
+
+/* ── WISH FORM ── */
+#wish{background:linear-gradient(180deg,#0d3322 0%,#0a2218 100%);text-align:center}
+.wish-form{max-width:560px;margin:44px auto 0}
+.wish-form label{display:block;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;text-align:left}
+.wish-form input,.wish-form textarea{
+  width:100%;padding:13px 16px;
+  background:rgba(253,246,236,.04);border:1px solid rgba(201,168,76,.25);border-radius:2px;
+  color:var(--cream);font-family:'Jost',sans-serif;font-size:.95rem;
+  outline:none;transition:.2s;resize:none;margin-bottom:20px;
+}
+.wish-form input::placeholder,.wish-form textarea::placeholder{color:rgba(253,246,236,.3)}
+.wish-form input:focus,.wish-form textarea:focus{border-color:var(--gold);background:rgba(201,168,76,.06)}
+.wish-form textarea{min-height:110px}
+.wish-form button{
+  width:100%;padding:15px;background:var(--red);color:var(--gold);
+  font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:.14em;
+  text-transform:uppercase;font-weight:500;
+  border:1px solid rgba(201,168,76,.3);border-radius:2px;cursor:pointer;transition:.2s;
+}
+.wish-form button:hover{background:var(--red2);transform:translateY(-2px)}
+.success-msg{
+  display:none;margin-top:20px;padding:18px;
+  background:rgba(29,92,58,.4);border:1px solid rgba(61,153,102,.3);
+  border-radius:2px;color:var(--gold2);font-size:.9rem;letter-spacing:.06em;
+}
+
+/* ── DISPLAY CARD ── */
+#display{display:none;padding:80px 6%;background:#0a1e12;text-align:center}
+.display-card{
+  max-width:640px;margin:0 auto;
+  background:rgba(253,246,236,.04);border:1px solid rgba(201,168,76,.2);
+  border-radius:2px;padding:50px 44px;position:relative;
+}
+.display-card::before{
+  content:'';position:absolute;inset:0;border-radius:2px;
+  background:radial-gradient(ellipse at top,rgba(139,26,26,.12),transparent 60%);
+  pointer-events:none;
+}
+.dc-to{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.dc-name{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;font-style:italic;color:var(--cream);margin-bottom:24px}
+.dc-msg{font-family:'EB Garamond',serif;font-size:1.12rem;font-style:italic;line-height:1.95;color:rgba(253,246,236,.85);margin-bottom:28px}
+.dc-from{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--red3);font-style:italic}
+
+/* ── FOOTER ── */
+footer{background:#060e09;text-align:center;padding:44px 20px;border-top:1px solid rgba(201,168,76,.12)}
+footer .f-brand{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gold);margin-bottom:10px;display:block;letter-spacing:.06em}
+footer p{color:rgba(253,246,236,.3);font-size:.8rem;line-height:1.8}
+footer em{color:var(--red3);font-style:normal}
+
+@media(max-width:720px){
+  .nav-links li:not(:last-child):not(:nth-last-child(2)){display:none}
+  .letter-wrap{padding:36px 24px}
+  .login-box{padding:40px 26px 36px}
+}
+</style>
 </head>
-
 <body>
-    <header>Hello, Radha</header>
-    <h1 class="heading">My First Heading</h1>
-    <h2 style="background-color: rgba(255, 0, 0, 0.275)">rgb(255, 0, 0)software</h2>
-    <h3 style="background-color:rgb(0,0,255);">rgb(0,0,255)engineer</h3>
-    <h4 style="background-color:rgb(0,255,0);">rbg(0,255,0)testing</h4>
-    <h5 style="background-color: rgb(255,0,0);">rgb (255,0,0)developer</h5>
-    <h6 style="color: red;">it</h6>
-    <p>My first paragraph.</p>
 
+<canvas id="petals"></canvas>
 
-    <p><q>An HTML element is defined by a start tag, some content, and an end tag:</q></p>
+<!-- ══════════════════════════════
+     LOGIN PAGE
+══════════════════════════════ -->
+<div id="loginPage">
+  <div class="login-box">
+    <span class="login-rose">🌹</span>
+    <p class="login-eyebrow">A page made with love</p>
+    <h1 class="login-title">Welcome, My Love</h1>
+    <p class="login-sub">Enter your name and her birthday to enter</p>
+    <div class="gold-line"></div>
 
-    <main>
-        <div>
-            <button><a target="_blank" href="https://www.youtube.com/">Click</a></button>
-            <button><a target="_blank" href="https://admin.hropal.vprc.in/app/company">Click</a></button>
-        </body>
-            
-       
-               
+    <label class="login-label">Your Name</label>
+    <input class="login-input" id="loginName" type="text" placeholder="e.g. Arjun" autocomplete="off"/>
+
+    <label class="login-label">Her Birthday Date</label>
+    <input class="login-input" id="loginDate" type="date"/>
+
+    <button class="login-btn" onclick="handleLogin()">Enter With Love ♥</button>
+    <p class="login-error" id="loginError">Please fill in both fields to continue.</p>
+    <p class="login-note">Your details are saved only in your browser.<br>No server. No tracking. Just love.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     MAIN PAGE
+══════════════════════════════ -->
+<div id="mainPage">
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">For My <em>Love</em></a>
+    <ul class="nav-links">
+      <li><span class="nav-user" id="navUser"></span></li>
+      <li><a href="#letter">Letter</a></li>
+      <li><a href="#quotes">Quotes</a></li>
+      <li><a href="#wish" class="cta-btn">Write to Her ♥</a></li>
+      <li><button class="logout-btn" onclick="handleLogout()">Sign Out</button></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-divider"></div>
+    <p class="hero-eyebrow">Today is your day, my love</p>
+    <h1>Happy <em>Birthday</em></h1>
+    <div class="hero-name" id="heroName">My Dearest</div>
+    <p class="hero-quote">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."</p>
+    <div class="hero-divider"></div>
+    <div style="margin-bottom:36px"></div>
+    <div class="hero-btns">
+      <a href="#letter" class="btn btn-rose">Read Your Letter ♥</a>
+      <a href="#quotes" class="btn btn-ghost">Love Quotes</a>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section id="letter">
+    <div class="gold-rule" style="margin-bottom:60px"><span>♥</span></div>
+    <p class="sec-eyebrow" style="text-align:center">A letter from my heart</p>
+    <h2 class="sec-title" style="text-align:center">To the One I Love</h2>
+    <div class="letter-wrap">
+      <p class="letter-text">
+        My love, on this beautiful day the world gave me the greatest gift — <strong>you.</strong><br><br>
+        Every morning I wake up grateful that somewhere in this universe,
+        the stars aligned just right to bring you into my life. You are not just
+        my lover — you are my <strong>peace, my home, my favourite person.</strong><br><br>
+        Today, on your birthday, I want you to feel how deeply and completely
+        you are adored. Your laughter is my favourite sound. Your smile is
+        the most beautiful thing I have ever seen. And your heart —
+        your heart is where I live.<br><br>
+        <strong>Happy birthday, my love. May this year give you everything you deserve —
+        which is absolutely everything.</strong>
+      </p>
+      <div style="width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 22px"></div>
+      <p class="letter-sig" id="fromSig">— Forever yours ♥</p>
+    </div>
+  </section>
+
+  <!-- ROSE MARQUEE -->
+  <div class="rose-strip">
+    <div class="rose-inner">
+      <span>You are my everything</span><span>Happy Birthday my love</span>
+      <span>Forever and always</span><span>My heart is yours</span>
+      <span>You make life beautiful</span><span>I love you endlessly</span>
+      <span>You are my everything</span><span>Happy Birthday my love</span>
+      <span>Forever and always</span><span>My heart is yours</span>
+      <span>You make life beautiful</span><span>I love you endlessly</span>
+    </div>
+  </div>
+
+  <!-- QUOTES -->
+  <section id="quotes">
+    <p class="sec-eyebrow" style="text-align:center">Words that say what the heart feels</p>
+    <h2 class="sec-title" style="text-align:center">Love, in Every Verse</h2>
+    <div class="quotes-grid">
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love.</p><p class="q-author">— Gabriel García Márquez</p></div>
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">Whatever our souls are made of, his and mine are the same.</p><p class="q-author">— Emily Brontë</p></div>
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">I am catastrophically in love with you.</p><p class="q-author">— Cassandra Clare</p></div>
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">I swear I couldn't love you more than I do right now, and yet I know I will tomorrow.</p><p class="q-author">— Leo Christopher</p></div>
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">You are every reason, every hope and every dream I've ever had, and no matter what happens to us in the future, every day we are together is the greatest day of my life.</p><p class="q-author">— Nicholas Sparks</p></div>
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">I love you without knowing how, or when, or from where. I love you simply, without problems or pride.</p><p class="q-author">— Pablo Neruda</p></div>
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">In your smile I see something more beautiful than the stars.</p><p class="q-author">— Beth Revis</p></div>
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">If I know what love is, it is because of you.</p><p class="q-author">— Hermann Hesse</p></div>
+      <div class="q-card"><span class="q-mark">"</span><p class="q-text">She is the only evidence of God I have seen with the exception of the fleeting grace occasionally apparent in other human beings.</p><p class="q-author">— John Updike</p></div>
+    </div>
+  </section>
+
+  <!-- SEND WISH -->
+  <section id="wish">
+    <div class="gold-rule" style="margin-bottom:60px"><span>♥</span></div>
+    <p class="sec-eyebrow" style="text-align:center">Personalise this page for her</p>
+    <h2 class="sec-title" style="text-align:center">Write Her Your Wish</h2>
+    <div class="wish-form">
+      <label>Her Name</label>
+      <input type="text" id="inName" placeholder="Her beautiful name..."/>
+      <label>Your Name</label>
+      <input type="text" id="inSender" placeholder="Your name..."/>
+      <label>Your Message to Her</label>
+      <textarea id="inMsg" placeholder="Pour your heart out — she deserves every word..."></textarea>
+      <button onclick="sendWish()">Send With Love ♥</button>
+      <div class="success-msg" id="successMsg">✦ Your wish is live — scroll up to see it ✦</div>
+    </div>
+  </section>
+
+  <!-- DISPLAY CARD -->
+  <section id="display">
+    <p class="sec-eyebrow">A message of love</p>
+    <h2 class="sec-title">Your Birthday Wish</h2>
+    <div class="display-card">
+      <p class="dc-to">To the most beautiful person —</p>
+      <p class="dc-name" id="dcName"></p>
+      <p class="dc-msg" id="dcMsg"></p>
+      <p class="dc-from" id="dcFrom"></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="f-brand">For My Love ♥</span>
+    <p>Made with <em>love</em> and devotion, for the one who deserves the whole world.</p>
+    <p style="margin-top:10px;font-size:.72rem;color:rgba(253,246,236,.18)">© 2026 · A gift from the heart</p>
+  </footer>
+
+</div><!-- /mainPage -->
+
+<script>
+/* ══════════════════════════
+   FALLING PETALS
+══════════════════════════ */
+const canvas = document.getElementById('petals');
+const ctx = canvas.getContext('2d');
+function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
+resize(); window.addEventListener('resize',resize);
+const PC=['#8b1a1a','#b52020','#d4302f','#c9a84c','#3d9966','#1a5c3a'];
+const petals=Array.from({length:55},()=>({
+  x:Math.random()*innerWidth, y:Math.random()*innerHeight-innerHeight,
+  r:Math.random()*7+4, color:PC[Math.floor(Math.random()*PC.length)],
+  speed:Math.random()*1.2+.6, drift:(Math.random()-.5)*1.2,
+  rot:Math.random()*Math.PI*2, rotS:(Math.random()-.5)*.04,
+  swing:Math.random()*Math.PI*2, opacity:Math.random()*.45+.2
+}));
+let t=0;
+function drawPetals(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);t++;
+  petals.forEach(p=>{
+    p.y+=p.speed; p.rot+=p.rotS;
+    p.x+=Math.sin(p.swing+t*.012)*p.drift;
+    if(p.y>canvas.height+20){p.y=-16;p.x=Math.random()*canvas.width;}
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+    ctx.globalAlpha=p.opacity;ctx.fillStyle=p.color;
+    ctx.beginPath();ctx.ellipse(0,0,p.r,p.r*1.7,0,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+  });
+  requestAnimationFrame(drawPetals);
+}
+drawPetals();
+
+/* ══════════════════════════
+   AUTH — localStorage
+══════════════════════════ */
+const LS_KEY = 'bdlove_session';
+
+function saveSession(name, date){
+  localStorage.setItem(LS_KEY, JSON.stringify({name, date, ts: Date.now()}));
+}
+function getSession(){
+  try{ return JSON.parse(localStorage.getItem(LS_KEY)); }
+  catch(e){ return null; }
+}
+function clearSession(){
+  localStorage.removeItem(LS_KEY);
+}
+
+function showMain(name){
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('mainPage').style.display  = 'block';
+  // populate name
+  document.getElementById('heroName').textContent = name + ' ♥';
+  document.getElementById('navUser').textContent  = 'Hi, ' + name;
+  document.getElementById('fromSig').textContent  = '— Forever yours, ' + name + ' ♥';
+  document.getElementById('inSender').value       = name;
+}
+
+function handleLogin(){
+  const nameVal = document.getElementById('loginName').value.trim();
+  const dateVal = document.getElementById('loginDate').value;
+  const err     = document.getElementById('loginError');
+
+  if(!nameVal || !dateVal){
+    err.style.display = 'block';
+    err.textContent   = 'Please fill in both fields to continue.';
+    return;
+  }
+  err.style.display = 'none';
+  saveSession(nameVal, dateVal);
+  showMain(nameVal);
+}
+
+function handleLogout(){
+  clearSession();
+  document.getElementById('mainPage').style.display  = 'none';
+  document.getElementById('loginPage').style.display = 'flex';
+  // reset fields
+  document.getElementById('loginName').value = '';
+  document.getElementById('loginDate').value = '';
+}
+
+/* Auto-login if session exists */
+(function init(){
+  const s = getSession();
+  if(s && s.name){
+    showMain(s.name);
+  }
+})();
+
+/* ══════════════════════════
+   WISH FORM
+══════════════════════════ */
+function sendWish(){
+  const name   = document.getElementById('inName').value.trim();
+  const sender = document.getElementById('inSender').value.trim();
+  const msg    = document.getElementById('inMsg').value.trim();
+  if(name){ document.getElementById('heroName').textContent=name+' ♥'; document.getElementById('dcName').textContent=name; }
+  if(sender){ document.getElementById('fromSig').textContent='— Forever yours, '+sender+' ♥'; document.getElementById('dcFrom').textContent='— With all my love, '+sender+' ♥'; }
+  if(msg){ document.getElementById('dcMsg').textContent='\u201C'+msg+'\u201D'; }
+  document.getElementById('display').style.display='block';
+  document.getElementById('successMsg').style.display='block';
+  // persist wish in localStorage
+  localStorage.setItem('bdlove_wish', JSON.stringify({name,sender,msg}));
+  setTimeout(()=>{ document.getElementById('display').scrollIntoView({behavior:'smooth'}); },900);
+}
+
+/* restore saved wish */
+(function restoreWish(){
+  try{
+    const w = JSON.parse(localStorage.getItem('bdlove_wish'));
+    if(w && w.msg){
+      if(w.name){ document.getElementById('inName').value=w.name; document.getElementById('dcName').textContent=w.name; }
+      if(w.sender){ document.getElementById('inSender').value=w.sender; }
+      if(w.msg){ document.getElementById('inMsg').value=w.msg; document.getElementById('dcMsg').textContent='\u201C'+w.msg+'\u201D'; document.getElementById('display').style.display='block'; }
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
